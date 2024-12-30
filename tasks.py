@@ -15,9 +15,9 @@ def test(c):
 
 @task
 def format(c):
-    c.run(".venv\\Scripts\\activate && black .")
+    c.run(".venv\\Scripts\\activate && black src")
 
 
 @task
 def lint(c):
-    c.run(".venv\\Scripts\\activate && flake8")
+    c.run(".venv\\Scripts\\activate && flake8 src")
