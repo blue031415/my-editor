@@ -1,0 +1,71 @@
+# .github/workflows/build.yml
+
+name: CI
+
+# ワークフローがトリガーされるイベントを定義
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      # リポジトリをチェックアウト
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      # Pythonをセットアップ
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'  # プロジェクトで使用しているPythonのバージョンに変更
+
+      # キャッシュを有効化（依存関係のインストールを高速化）
+      - name: Cache pip
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+
+      # 依存関係をインストール
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      # Flake8でリンティング
+      - name: Lint with flake8
+        run: |
+          pip install flake8
+          flake8 .
+
+      # Blackでフォーマットチェック
+      - name: Check code formatting with Black
+        run: |
+          pip install black
+          black --check .
+
+      # テストの実行（pytestを使用する場合）
+      - name: Run tests with pytest
+        run: |
+          pip install pytest
+          pytest
+
+      # Fletアプリのビルド（必要に応じて）
+      - name: Build Flet app
+        run: |
+          pip install flet
+          # ここにFletアプリのビルドコマンドを追加
+          # 例: python build_app.py
+
+      # デプロイステップ（必要に応じて）
+      # - name: Deploy
+      #   run: |
+      #     # デプロイに関するコマンドをここに追加
