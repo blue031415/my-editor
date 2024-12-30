@@ -6,6 +6,7 @@ IF EXIST .venv (
     rmdir /s /q .venv
 )
 
+
 REM 新しい仮想環境を作成
 python -m venv .venv
 
