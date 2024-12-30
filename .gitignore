@@ -1,0 +1,22 @@
+# Python関連
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.egg
+*.egg-info/
+dist/
+build/
+env/
+venv/
+.venv/
+
+# VSCode関連
+.vscode/
+
+# その他
+*.log
+*.tmp
+*.bak
+.DS_Store
