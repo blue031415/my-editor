@@ -21,3 +21,8 @@ def format(c):
 @task
 def lint(c):
     c.run(".venv\\Scripts\\activate && flake8 src")
+
+
+@task
+def dev(c):
+    c.run("python src/main.py")
