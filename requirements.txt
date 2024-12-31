@@ -4,3 +4,4 @@ flet
 pytest
 invoke
 python-dotenv
+pyinstaller
