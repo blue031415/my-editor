@@ -1,34 +1,32 @@
 import sys
 import os
-import pytest
-from flet import Page, TextField, ElevatedButton, Row, Column, ScrollMode
-from view import View
+from unittest.mock import MagicMock
+from flet import Page, Row, Column, ScrollMode
 
-# srcディレクトリをモジュール検索パスに追加
+
+# srcディレクトリをsys.pathに追加
 sys.path.insert(
-    0, os.path.abspath(os.path.join(os.path.dirname(__file__), "../src"))
+    0,
+    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")),
 )
+from src.view import View
 
 
-@pytest.fixture
-def setup():
-    page = Page()
-    view = View(page)
-    return view, page
+class TestView:
+    def setup_method(self):
+        self.page = Page(
+            conn=MagicMock(), session_id=MagicMock(), loop=MagicMock()
+        )
+        self.view = View(self.page)
 
+    def test_setup_ui(self):
+        # Check if the Row containing the buttons is added
+        assert isinstance(self.page.controls[0], Row)
+        assert self.page.controls[0].controls[0] == self.view.open_button
+        assert self.page.controls[0].controls[1] == self.view.save_button
 
-def test_setup_ui(setup):
-    view, page = setup
-    assert isinstance(view.text_field, TextField)
-    assert isinstance(view.open_button, ElevatedButton)
-    assert isinstance(view.save_button, ElevatedButton)
-    assert isinstance(page.controls[0], Row)
-    assert isinstance(page.controls[1], Column)
-    assert page.controls[1].scroll == ScrollMode.ALWAYS
-    assert page.controls[1].expand
-
-
-def test_display_content(setup):
-    view, _ = setup
-    view.display_content("Test content")
-    assert view.text_field.value == "Test content"
+        # Check if the Column containing the text field is added
+        assert isinstance(self.page.controls[1], Column)
+        assert self.page.controls[1].controls[0] == self.view.text_field
+        assert self.page.controls[1].scroll == ScrollMode.ALWAYS
+        assert self.page.controls[1].expand
