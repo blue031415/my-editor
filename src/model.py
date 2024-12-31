@@ -12,9 +12,9 @@ class Model:
     def content(self, content: str):
         self._content = content
 
-    def load_file(self, file_path: str, content: str):
+    def load_file(self, file_path: str):
         with open(file_path, "r", encoding="utf-8") as f:
-            self._content = f.read(content)
+            self._content = f.read()
 
     def save_file(self, file_path: str, content: str):
         with open(file_path, "w", encoding="utf-8") as f:

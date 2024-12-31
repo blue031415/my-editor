@@ -1,4 +1,4 @@
-from flet import TextField, Page, ElevatedButton, Column, Row
+from flet import TextField, Page, ElevatedButton, Column, Row, ScrollMode
 
 
 class View:
@@ -16,14 +16,21 @@ class View:
 
     def setup_ui(self):
         self.page.add(
+            Row(
+                [
+                    self.open_button,
+                    self.save_button,
+                ],
+            ),
             Column(
                 [
-                    Row([self.open_button, self.save_button]),
                     self.text_field,
-                ]
-            )
+                ],
+                scroll=ScrollMode.ALWAYS,
+                expand=True,
+            ),
         )
 
     def display_content(self, content: str):
-        self.text_field.vale = content
+        self.text_field.value = content
         self.text_field.update()
