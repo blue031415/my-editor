@@ -1,14 +1,5 @@
-import sys
-import os
 from unittest.mock import MagicMock
 from flet import Page, Row, Column, ScrollMode
-
-
-# srcディレクトリをsys.pathに追加
-sys.path.insert(
-    0,
-    os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "src")),
-)
 from src.view import View
 
 

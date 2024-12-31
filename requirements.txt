@@ -3,3 +3,4 @@ flake8
 flet
 pytest
 invoke
+python-dotenv
